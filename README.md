@@ -13,7 +13,7 @@
 
 ## Allowed functions
 
-##### I will only describe functions that I never saw before.
+##### I will only describe functions that I have never seen before.
 ##### perror, strerror are systems error messages.
 ##### access is used to check the accesibility of a file by giving in parameters both the path corresponding to the file and the mode which describes the access permission to be checked.
 ##### dup :
