@@ -11,3 +11,16 @@
 ##### But there is an easier way to combinate multiples commands. It is about the redirection of the standard output of a program in the standard input of another. We use the symbol | (pipe) to realize it.
 ![WX5NN](https://user-images.githubusercontent.com/81758850/227573480-db345907-f66d-4482-a743-99dd734c671f.png)
 
+## Allowed functions
+
+##### I will only describe functions that I never saw before.
+##### perror, strerror are systems error messages.
+##### access is used to check the accesibility of a file by giving in parameters both the path corresponding to the file and the mode which describes the access permission to be checked.
+##### dup :
+##### dup2 :
+##### execve :
+##### fork :
+##### pipe :
+##### unlink :
+##### wait :
+##### waitpid :
