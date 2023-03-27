@@ -11,16 +11,16 @@
 ##### But there is an easier way to combinate multiples commands. It is about the redirection of the standard output of a program in the standard input of another. We use the symbol | (pipe) to realize it.
 ![WX5NN](https://user-images.githubusercontent.com/81758850/227573480-db345907-f66d-4482-a743-99dd734c671f.png)
 
-## Allowed functions
+## Allowed functions:
 
-##### I will only describe functions that I never saw before.
-##### perror, strerror are systems error messages.
-##### access is used to check the accesibility of a file by giving in parameters both the path corresponding to the file and the mode which describes the access permission to be checked.
-##### dup :
-##### dup2 :
-##### execve :
-##### fork :
-##### pipe :
-##### unlink :
-##### wait :
-##### waitpid :
+##### I will only describe functions that I have never seen before.
+##### perror(), strerror() are systems error messages.
+##### access() is used to check the accesibility of a file by giving in parameters both the path corresponding to the file and the mode which describes the access permission to be checked.
+##### dup() duplicates an existing file descriptor and returns its value (file2 = dup(file1)).
+##### dup2() allows to access the new descriptor, file2, and returns its value.
+##### execve() executes a file by transforming the calling process into a new process. The path of the file is referenced in the first parameter, the argument argv contains the argument list available to the new process and finally the envp is the last parameter and is linked to the global variable environ.
+##### fork() creates a new process which is a copy of the calling process (parent process) except for some characteristics. If successful, the function returns a value of 0 to the child process.
+##### pipe() creates a pipe, unidirectionnal channel between processes. pipefd is used to return two files descriptor refering to the pipe extremity. The pipe function returns 0 if successful.
+##### unlink() detroys a name and eventually the file associated. The function returns 0 if successful.
+##### wait() stops the calling process until a child process change its state. Therefore, obtaining new child informations is possible.
+##### waitpid works like wait() but for a specific child differenciates by its pid.
