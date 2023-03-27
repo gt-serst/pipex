@@ -14,6 +14,7 @@
 ## Allowed functions:
 
 ##### I will only describe functions that I have never seen before.
+<<<<<<< HEAD
 ##### perror(), strerror() are systems error messages.
 ##### access() is used to check the accesibility of a file by giving in parameters both the path corresponding to the file and the mode which describes the access permission to be checked.
 ##### dup() duplicates an existing file descriptor and returns its value (file2 = dup(file1)).
@@ -24,3 +25,15 @@
 ##### unlink() detroys a name and eventually the file associated. The function returns 0 if successful.
 ##### wait() stops the calling process until a child process change its state. Therefore, obtaining new child informations is possible.
 ##### waitpid works like wait() but for a specific child differenciates by its pid.
+=======
+##### perror, strerror are systems error messages.
+##### access is used to check the accesibility of a file by giving in parameters both the path corresponding to the file and the mode which describes the access permission to be checked.
+##### dup :
+##### dup2 :
+##### execve :
+##### fork :
+##### pipe :
+##### unlink :
+##### wait :
+##### waitpid :
+>>>>>>> a012cbf53c9bfb826f2311e35abf514dae97bb53
