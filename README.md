@@ -14,7 +14,7 @@
 ## Allowed functions:
 
 ##### I will only describe functions that I have never seen before.
-##### - perror(), strerror() are systems error messages.
+* perror(), strerror() are systems error messages.
 ##### * access() is used to check the accesibility of a file by giving in parameters both the path corresponding to the file and the mode which describes the access permission to be checked.
 ##### * dup() duplicates an existing file descriptor and returns its value (file2 = dup(file1)).
 ##### * dup2() allows to access the new descriptor, file2, and returns its value.
