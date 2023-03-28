@@ -34,7 +34,7 @@
 <br>
 * waitpid() works like wait() but for a specific child differenciates by its pid. <br> <br>
 `pid_t waitpid(pid_t pid, int *status, int options);`
-
+<br>
 ## Logic to reproduce the shell pipe '|' operator
 1. Launch a pipe before getting a child.
 * pipefd[0] : end of reading
