@@ -30,7 +30,8 @@
 * unlink() delete a file descriptor. The function returns 0 if successful. <br> <br>
 `int unlink(const char *pathname);` <br>
 * wait() stops the calling process until a child process change its state. Therefore, obtaining new child informations is possible. <br> <br>
-`pid_t wait(int *status);` <br>
+`pid_t wait(int *status);` 
+<br>
 * waitpid() works like wait() but for a specific child differenciates by its pid. <br> <br>
 `pid_t waitpid(pid_t pid, int *status, int options);`
 
