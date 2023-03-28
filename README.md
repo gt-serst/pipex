@@ -27,9 +27,9 @@
 `Proto : pid_t wait(int *status)`
 Code :-
 <html>
-	<body>
-		<p>`Proto : pid_t wait(int *status)`</p>
-	</body>
+<body>
+<p>`Proto : pid_t wait(int *status)`</p>
+</body>
 </html>
 * waitpid() works like wait() but for a specific child differenciates by its pid.
     `Hello This is a code`
