@@ -19,8 +19,15 @@
 * dup() duplicates an existing file descriptor and returns its value (file2 = dup(file1)).
 * dup2() allows to access the new descriptor, file2, and returns its value.
 * execve() executes a file by transforming the calling process into a new process. The path of the file is referenced in the first parameter, the argument argv contains the argument list available to the new process and finally the envp is the last parameter and is linked to the global variable environ.
-* fork() creates a new process which is a copy of the calling process (parent process) except for some characteristics. If successful, the function returns a value of 0 to the child process.
-* pipe() creates a pipe, unidirectionnal channel between processes. pipefd is used to return two files descriptor refering to the pipe extremity. The pipe function returns 0 if successful.
+* fork() creates a new process which is a copy of the calling process (parent process) and will be executed at the same time. If successful, the function returns a value of 0 to the child process.
+####Proto : pid\_t fork(void);
+* pipe() creates a pipe, unidirectionnal channel between processes. pipefd is used to return two files descriptor refering to the pipe extremity. The pipe function returns a null value if we are in the child process, positive value if we are in the parent process and a negative value if an error occurs.
 * unlink() detroys a name and eventually the file associated. The function returns 0 if successful.
 * wait() stops the calling process until a child process change its state. Therefore, obtaining new child informations is possible.
+Code :- 
+<html>
+	<body>
+		<p>Proto : pid_t wait(int *status)</p>
+	</body>
+</html>
 * waitpid() works like wait() but for a specific child differenciates by its pid.
