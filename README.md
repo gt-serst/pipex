@@ -15,26 +15,24 @@
 
 #### I will only describe functions that I have never seen before.
 * perror(), strerror() are systems error messages.
-* access() is used to check the accesibility of a file by giving in parameters both the path corresponding to the file and the mode which describes the access permission to be checked. <br> <br>
-`int access(const char *path, int mode);` <br>
-* dup() duplicates an existing file descriptor and returns its value (newfd = dup(oldfd). <br> <br>
-`int dup(int oldfd);` <br>
-* dup2() works like dup. The difference between them is that dup automoticcaly chose the smallest number of fd currently available while with dup2 we can specify the number we want. <br> <br>
-`int dup2(int oldfd, int newfd);` <br>
-* execve() executes a file by transforming the calling process into a new process. The path of the file is referenced in the first parameter, the argument argv contains the argument list available to the new process and finally the envp is the last parameter and is linked to the global variable environ. <br> <br>
-`int execve(const char *path, char *const argv[], char *const envp[]);` <br>
-* fork() creates a new process which is a copy of the calling process (parent process) and will be executed at the same time. If successful, the function returns a value of 0 to the child process. <br> <br>
-`pid_t fork(void);` <br>
-* pipe() creates a pipe, unidirectionnal channel between processes. pipefd is used to return two files descriptor refering to the pipe extremity. The pipe function returns a null value if we are in the child process, positive value if we are in the parent process and a negative value if an error occurs. <br> <br>
-`int pipe(int pipefd[2]);` <br>
-* unlink() delete a file descriptor. The function returns 0 if successful. <br> <br>
-`int unlink(const char *pathname);` <br>
-* wait() stops the calling process until a child process change its state. Therefore, obtaining new child informations is possible. <br> <br>
-`pid_t wait(int *status);` 
-<br>
-* waitpid() works like wait() but for a specific child differenciates by its pid. <br> <br>
+* access() is used to check the accesibility of a file by giving in parameters both the path corresponding to the file and the mode which describes the access permission to be checked. <br>
+`int access(const char *path, int mode);`
+* dup() duplicates an existing file descriptor and returns its value (newfd = dup(oldfd). <br>
+`int dup(int oldfd);`
+* dup2() works like dup. The difference between them is that dup automoticcaly chose the smallest number of fd currently available while with dup2 we can specify the number we want. <br>
+`int dup2(int oldfd, int newfd);`
+* execve() executes a file by transforming the calling process into a new process. The path of the file is referenced in the first parameter, the argument argv contains the argument list available to the new process and finally the envp is the last parameter and is linked to the global variable environ. <br>
+`int execve(const char *path, char *const argv[], char *const envp[]);`
+* fork() creates a new process which is a copy of the calling process (parent process) and will be executed at the same time. If successful, the function returns a value of 0 to the child process. <br>
+`pid_t fork(void);`
+* pipe() creates a pipe, unidirectionnal channel between processes. pipefd is used to return two files descriptor refering to the pipe extremity. The pipe function returns a null value if we are in the child process, positive value if we are in the parent process and a negative value if an error occurs. <br>
+`int pipe(int pipefd[2]);`
+* unlink() delete a file descriptor. The function returns 0 if successful. <br>
+`int unlink(const char *pathname);`
+* wait() stops the calling process until a child process change its state. Therefore, obtaining new child informations is possible. <br>
+`pid_t wait(int *status);`
+* waitpid() works like wait() but for a specific child differenciates by its pid. <br>
 `pid_t waitpid(pid_t pid, int *status, int options);`
-<br>
 ## Logic to reproduce the shell pipe '|' operator
 1. Launch a pipe before getting a child.
 * pipefd[0] : end of reading
