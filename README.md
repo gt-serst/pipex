@@ -23,14 +23,8 @@
 ####Proto : pid\_t fork(void);
 * pipe() creates a pipe, unidirectionnal channel between processes. pipefd is used to return two files descriptor refering to the pipe extremity. The pipe function returns a null value if we are in the child process, positive value if we are in the parent process and a negative value if an error occurs.
 * unlink() detroys a name and eventually the file associated. The function returns 0 if successful.
-* wait() stops the calling process until a child process change its state. Therefore, obtaining new child informations is possible.
+* wait() stops the calling process until a child process change its state. Therefore, obtaining new child informations is possible. <br>
 `Proto : pid_t wait(int *status)`
-Code :-
-<html>
-<body>
-<p>`Proto : pid_t wait(int *status)`</p>
-</body>
-</html>
 * waitpid() works like wait() but for a specific child differenciates by its pid.
     `Hello This is a code`
 
