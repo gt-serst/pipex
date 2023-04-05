@@ -1,7 +1,11 @@
 # pipex
 
+## Context
+##### Reproduce shell pipe operator in C.
+##### The program will be executed like this 
+`./pipex infile cmd1 cmd2 outfile` 
+##### so it takes 4 arguments : infile outfile are files names and cmd1 cmd2 are shell commands with their parameters.
 ## Theory
-
 ##### Each UNIX process is associated to 3 distincts flows :
 ##### 1) standard input (STDIN), by default it is associated to the keyboard.
 ##### 2) standard output (STDOUT), by default it is associated to the terminal.
@@ -34,6 +38,8 @@
 * waitpid() works like wait() but for a specific child differenciates by its pid. <br>
 `pid_t waitpid(pid_t pid, int *status, int options);`
 ## Logic to reproduce the shell pipe '|' operator
+##### First we have to extract arguments send by the shell command. arg[0] is the executive file, arg[1] is the file we used to execute the cmd1, arg[2] is the cmd1, arg[3] is the cmd2 and arg[4] is the file used to execute the cmd2, therefore it is the output of cmd1. To execute commands, we need the path of the infile and outfile.
+##### Each command will follow two processes, child and parent.
 1. Launch a pipe before getting a child.
 * pipefd[0] : end of reading
 * pipefd[1] : end of writing
