@@ -5,40 +5,59 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gt-serst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/28 16:27:57 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/04/05 15:19:40 by gt-serst         ###   ########.fr       */
+/*   Created: 2023/04/07 16:52:30 by gt-serst          #+#    #+#             */
+/*   Updated: 2023/04/07 19:11:39 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
+#include "libft/libft.h"
 #include <stdio.h>
-#include <unistd.h>
 
-int main(void)
+char	*ft_search_path_variable(char **envp, char *str)
 {
-    pid_t pid;
+	int	i;
+	int	j;
+	char	*PATH;
 
-    printf("Fork ici.\n");
-    pid = fork();
-    if (pid == -1)
-    {
-        // Si fork renvoie -1, il y a eu une erreur !
-        return (1);
-    }
-    printf("\nFork reussi !\n");
-    if (pid == 0)
-    {
-        // La valeur de retour de fork
-        // est 0, ce qui veut dire qu'on est
-        // dans le processus fils
-        printf("Fils : Je suis le fils, mon pid interne est %d.\n", pid);
-    }
-    else if (pid > 0)
-    {
-        // La valeur de retour de fork 
-        // est différente de 0, ce qui veut dire
-        // qu'on est dans le processus père
-        printf("Pere : Je suis le pere, le pid de mon fils est %d.\n", pid);
-    }
-    return(0);
+	i = 0;
+	while (envp[i] && str)
+	{
+		j = 0;
+		if (envp[i][j] == str[j])
+		{
+			while (envp[i][j] && str[j] && envp[i][j] == str[j])
+			{
+				j++;
+				if (str[j + 1] == '\0')
+				{
+					PATH = ft_substr(envp[i], j + 1, ft_strlen(envp[i]));
+					return (PATH);
+				}
+			}
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+void	ft_get_paths_and_cmds(char **av, char **envp)
+{
+	char	*path_variable;
+	char	**mypaths;
+	char	**mycmds;
+
+	path_variable = ft_search_path_variable(envp, "PATH=");
+	printf("%s\n", path_variable);
+	mypaths = ft_split(path_variable, ':');
+	printf("%s\n", mypaths[0]);
+	mycmds = ft_split(av[2], ' ');
+	printf("%s\n", mycmds[0]);
+}
+
+int	main(int ac, char **av, char **envp)
+{
+	(void)ac;
+	printf("%s\n", envp[11]);
+	ft_get_paths_and_cmds(av, envp);
+	return (0);
 }

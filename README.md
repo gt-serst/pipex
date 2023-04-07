@@ -21,7 +21,7 @@
 * perror(), strerror() are systems error messages.
 * access() is used to check the accesibility of a file by giving in parameters both the path corresponding to the file and the mode which describes the access permission to be checked. <br>
 `int access(const char *path, int mode);`
-* dup() duplicates an existing file descriptor and returns its value (newfd = dup(oldfd). <br>
+* dup() duplicates an existing file descriptor and returns its value (newfd = dup(oldfd)). <br>
 `int dup(int oldfd);`
 * dup2() works like dup. The difference between them is that dup automoticcaly chose the smallest number of fd currently available while with dup2 we can specify the number we want. <br>
 `int dup2(int oldfd, int newfd);`
@@ -38,9 +38,12 @@
 * waitpid() works like wait() but for a specific child differenciates by its pid. <br>
 `pid_t waitpid(pid_t pid, int *status, int options);`
 ## Logic to reproduce the shell pipe '|' operator
-##### First we have to extract arguments send by the shell command. arg[0] is the executive file, arg[1] is the file we used to execute the cmd1, arg[2] is the cmd1, arg[3] is the cmd2 and arg[4] is the file used to execute the cmd2, therefore it is the output of cmd1. To execute commands, we need the path of the infile and outfile.
-1. Launch a pipe before getting a child.
-* pipefd[0] : end of reading
-* pipefd[1] : end of writing
-2. Use a fork to allow child process have a pair of fd which are corresponding to the same pipe without forget to use waitpid otherwise the parent ends and don't wait for the child's change of state. Therefore, child process will become zombie (orphan childs) process which wait for their parents to take them into account.
-3. Play with fd's thanks to dup and redirecting the standard output of child one in the standard input of child two.
+##### First we have to extract arguments send by the shell command. arg[0] is the executive file, arg[1] is the file we used to put the result of the cmd1, arg[2] is the cmd1, arg[3] is the cmd2 and arg[4] is the file used to put the result of the cmd2 on the infile. But to execute this commands we need the shell path of each.
+##### How can I find the path of a shell command? I must get the path variable of my environment. Then I retrieve the PATH line and I separate each paths mentionned using split and ':' character as separator. Finally, I check if the specified command is located in a specific path. If not, execve() function fails and I try another path.
+##### How can I deal with commands options (for example '-l' of 'wc')? I use strchr to confirm that there is an option and then I use another extraction function to get the entire command.
+##### Verify if I have access to a particular path.
+
+
+##### Create a pipe to allow communication between two processes. In this case, by using fork(), we create a child and a parent process that will communicate with each other.
+##### Redirecting the standard output of child one in the standard input of child two with dup().
+##### Use waitpid() otherwise the parent ends and don't wait for the child's change of state. Therefore, child process will become zombie (orphan childs) process which wait for their parents to take them into account.
