@@ -1,37 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gt-serst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/07 16:52:30 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/04/12 21:50:55 by gt-serst         ###   ########.fr       */
+/*   Created: 2023/04/12 21:47:11 by gt-serst          #+#    #+#             */
+/*   Updated: 2023/04/12 21:48:48 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	main(int ac, char **av, char **envp)
+void	ft_pipex(int infile, int outfile, t_data *pipex, char **envp)
 {
-	int	infile;
-	int outfile;
-	t_data	*pipex;
+  	int		pipefd[2];
+	pid_t	pid;
 
-	if (ac == 5)
+	if (pipe(pipefd) == -1)
 	{
-		pipex = malloc(sizeof(t_data));
-		if (!pipex)
-			return (1);
-		infile = open(av[1], O_RDONLY);
-		outfile = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
-		if (infile < 0 || outfile < 0)
-			return (1);
-		ft_get_paths_and_cmds(pipex, av, envp);
-		ft_pipex(infile, outfile, pipex, envp);
-		free(pipex);
-		return (0);
+		perror("pipe");
+		exit(0);
 	}
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		exit(0);
+	}
+	else if (pid == 0)
+		ft_child_process(infile, outfile, pipex, envp, pipefd);
 	else
-		return (1);
+		ft_parent_process(infile, outfile, pipex,  envp, pipefd);
 }
