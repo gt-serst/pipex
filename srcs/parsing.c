@@ -6,11 +6,11 @@
 /*   By: gt-serst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 21:46:26 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/04/12 22:00:14 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/04/14 17:12:27 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../includes/pipex.h"
 
 char	*ft_search_path_variable(char **envp, char *str)
 {
@@ -42,6 +42,7 @@ char	*ft_search_path_variable(char **envp, char *str)
 void	ft_get_paths_and_cmds(t_data *pipex, char **av, char **envp)
 {
 	char	*path_variable;
+	char	*temp;
 
 	/* GET PATH VARIABLE*/
 	path_variable = ft_search_path_variable(envp, "PATH=");
@@ -53,14 +54,16 @@ void	ft_get_paths_and_cmds(t_data *pipex, char **av, char **envp)
 	pipex->mycmd1args = ft_split(av[2], ' ');
 	printf("%s\n", pipex->mycmd1args[1]);
 	/* GET CMD1 */
-	pipex->mycmd1 = ft_strdup("/");
-	pipex->mycmd1 = ft_strjoin(pipex->mycmd1, pipex->mycmd1args[0]);
+	temp = ft_strdup("/");
+	pipex->mycmd1 = ft_strjoin(temp, pipex->mycmd1args[0]);
+	free(temp);
 	printf("%s\n", pipex->mycmd1);
 	/* GET ALL CMD2 OPTIONS */
 	pipex->mycmd2args = ft_split(av[3], ' ');
 	printf("%s\n", pipex->mycmd2args[1]);
 	/* GET CMD2 */
-	pipex->mycmd2 = ft_strdup("/");
-	pipex->mycmd2 = ft_strjoin(pipex->mycmd2, pipex->mycmd2args[0]);
+	temp = ft_strdup("/");
+	pipex->mycmd2 = ft_strjoin(temp, pipex->mycmd2args[0]);
+	free(temp);
 	printf("%s\n", pipex->mycmd2);
 }

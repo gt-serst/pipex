@@ -45,6 +45,8 @@
 * How can I deal with commands options (for example '-l' of 'wc')? <br>
 ##### I also use ft\_split() with space as separator to get the command and each options in a double array.
 * How verify if I have access to a particular path? <br>
-##### I use access().
+##### I should use access() but I think I could use another way simply by checking all possible path with execve(). If no correct path is found, execve does nothing and I return an EXIT\_FAILURE.
 * How files will communicate? <br>
 ##### First I will create a pipe to allow communication between two processes. In this case, by using fork(), I create a child and a parent process that will communicate with each other. Then, I will redirect the standard output of the child in the standard input of the parent with dup(). Finally, I will use waitpid() otherwise the parent ends and don't wait for the child's change of state. Therefore, child process will become zombie (orphan childs) process which wait for their parents to take them into account.
+* How deals with dup()? <br>
+##### In the child process, I want infile as stdin for cmd1 and pipefd[1] as stdout for cmd1. In the parent process, I want  pipefd[0] as stdin for cmd2 and outfile as stdout for cmd2. So, i will duplicate each file and pass the flow I need as an argument.

@@ -6,11 +6,19 @@
 /*   By: gt-serst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 16:52:30 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/04/12 21:50:55 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/04/14 18:05:48 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../includes/pipex.h"
+
+void	ft_exit(char *message, t_data *pipex)
+{
+	free(pipex);
+	perror(message);
+	//system("leaks a.out");
+	exit(EXIT_FAILURE);
+}
 
 int	main(int ac, char **av, char **envp)
 {
@@ -30,6 +38,7 @@ int	main(int ac, char **av, char **envp)
 		ft_get_paths_and_cmds(pipex, av, envp);
 		ft_pipex(infile, outfile, pipex, envp);
 		free(pipex);
+		//system("leaks a.out");
 		return (0);
 	}
 	else
