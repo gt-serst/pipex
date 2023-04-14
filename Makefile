@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gt-serst <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 17:01:35 by gt-serst          #+#    #+#              #
-#    Updated: 2023/04/14 17:08:50 by gt-serst         ###   ########.fr        #
+#    Updated: 2023/04/14 20:36:31 by gt-serst         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ clean:
 					make -C $(LIBFT_PATH) clean
 					$(RM) $(OBJS)
 
-flcean: clean
+fclean: clean
 					make -C $(LIBFT_PATH) fclean
 					$(RM) $(NAME)
 

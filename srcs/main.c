@@ -3,20 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gt-serst <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 16:52:30 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/04/14 18:05:48 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/04/14 20:36:50 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void	ft_exit(char *message, t_data *pipex)
+void	ft_free_array(char **array)
 {
+	int	i;
+
+	i = 0;
+	while (array && array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
+
+void	ft_free_malloc(t_data *pipex)
+{
+	ft_free_array(pipex->mypaths);
+	ft_free_array(pipex->mycmd1args);
+	ft_free_array(pipex->mycmd2args);
+	free(pipex->mycmd1);
+	free(pipex->mycmd2);
 	free(pipex);
-	perror(message);
-	//system("leaks a.out");
+}
+
+void	ft_exit(char *msg)
+{
+	perror(msg);
+	system("leaks a.out");
 	exit(EXIT_FAILURE);
 }
 
@@ -37,7 +59,7 @@ int	main(int ac, char **av, char **envp)
 			return (1);
 		ft_get_paths_and_cmds(pipex, av, envp);
 		ft_pipex(infile, outfile, pipex, envp);
-		free(pipex);
+		ft_free_malloc(pipex);
 		//system("leaks a.out");
 		return (0);
 	}
