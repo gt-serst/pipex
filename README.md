@@ -38,12 +38,13 @@
 * waitpid() works like wait() but for a specific child differenciates by its pid. <br>
 `pid_t waitpid(pid_t pid, int *status, int options);`
 ## Logic to reproduce the shell pipe '|' operator
-* First of all I have to extract arguments send by the shell command. arg[0] is the executive file, arg[1] is the file I will use to put the result of the first command, arg[2] is the first command, arg[3] is the second command and arg[4] is the file I will use to put the result of the second command. But to execute these commands I need the shell path of each.
+##### First of all I have to extract arguments send by the shell command. arg[0] is the executive file, arg[1] is the file I will use to put the result of the first command, arg[2] is the first command, arg[3] is the second command and arg[4] is the file I will use to put the result of the second command. But to execute these commands I need the shell path of each. <br>
+##### Some questions :
 * How can I find the path of a shell command? <br>
-###### I must get the path variable of my environment. Then I retrieve the PATH line and I separate each paths mentionned using split and ':' character as separator. Finally, I check if the specified command is located in a specific path. If not, execve() function fails and I try another path.
+##### I must get the path variable of my environment. Then I retrieve the PATH line and I separate each paths mentionned using split and ':' character as separator. Finally, I check if the specified command is located in a specific path. If not, execve() function fails and I try another path.
 * How can I deal with commands options (for example '-l' of 'wc')? <br>
-###### I also use ft\_split() with space as separator to get the command and each options in a double array.
+##### I also use ft\_split() with space as separator to get the command and each options in a double array.
 * How verify if I have access to a particular path? <br>
-###### I use access().
+##### I use access().
 * How files will communicate? <br>
-######First I will create a pipe to allow communication between two processes. In this case, by using fork(), I create a child and a parent process that will communicate with each other. Then, I will redirect the standard output of the child in the standard input of the parent with dup(). Finally, I will use waitpid() otherwise the parent ends and don't wait for the child's change of state. Therefore, child process will become zombie (orphan childs) process which wait for their parents to take them into account.
+##### First I will create a pipe to allow communication between two processes. In this case, by using fork(), I create a child and a parent process that will communicate with each other. Then, I will redirect the standard output of the child in the standard input of the parent with dup(). Finally, I will use waitpid() otherwise the parent ends and don't wait for the child's change of state. Therefore, child process will become zombie (orphan childs) process which wait for their parents to take them into account.
