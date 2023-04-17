@@ -6,7 +6,7 @@
 /*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 16:52:30 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/04/14 20:36:50 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/04/17 18:25:39 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,12 @@ void	ft_free_malloc(t_data *pipex)
 void	ft_exit(char *msg)
 {
 	perror(msg);
-	system("leaks a.out");
+	//system("leaks pipex");
 	exit(EXIT_FAILURE);
 }
 
 int	main(int ac, char **av, char **envp)
 {
-	int	infile;
-	int outfile;
 	t_data	*pipex;
 
 	if (ac == 5)
@@ -53,12 +51,15 @@ int	main(int ac, char **av, char **envp)
 		pipex = malloc(sizeof(t_data));
 		if (!pipex)
 			return (1);
-		infile = open(av[1], O_RDONLY);
-		outfile = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
-		if (infile < 0 || outfile < 0)
+		pipex->infile = open(av[1], O_RDONLY);
+		pipex->outfile = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
+		if (pipex->infile < 0 || pipex->outfile < 0)
+		{
+			ft_file_error(av[1]);
 			return (1);
+		}
 		ft_get_paths_and_cmds(pipex, av, envp);
-		ft_pipex(infile, outfile, pipex, envp);
+		ft_pipex(pipex, envp);
 		ft_free_malloc(pipex);
 		//system("leaks a.out");
 		return (0);
