@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gt-serst <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 18:27:47 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/04/18 16:57:04 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/04/18 18:32:09 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,15 @@ int	ft_parent_process(t_data *pipex, char **envp)
 	int	status;
 
 	if (pipe(pipex->pipefd) == -1)
-		ft_pipe_error(pipex);
+		ft_pipe_error();
 	pipex->pid1 = fork();
 	if (pipex->pid1 == -1)
-		ft_fork_error(pipex);
+		ft_fork_error();
 	else if (pipex->pid1 == 0)
 		ft_first_child(pipex, envp);
 	pipex->pid2 = fork();
 	if (pipex->pid2 == -1)
-		ft_fork_error(pipex);
+		ft_fork_error();
 	else if (pipex->pid2 == 0)
 		ft_last_child(pipex, envp);
 	ft_close_pipe(pipex);

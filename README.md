@@ -2,8 +2,8 @@
 
 ## Context
 ##### Reproduce shell pipe operator in C.
-##### The program will be executed like this 
-`./pipex infile cmd1 cmd2 outfile` 
+##### The program will be executed like this
+`./pipex infile cmd1 cmd2 outfile`
 ##### so it takes 4 arguments : infile outfile are files names and cmd1 cmd2 are shell commands with their parameters.
 ## Theory
 ##### Each UNIX process is associated to 3 distincts flows :
@@ -41,12 +41,12 @@
 ##### First of all I have to extract arguments send by the shell command. arg[0] is the executive file, arg[1] is the file I will use to put the result of the first command, arg[2] is the first command, arg[3] is the second command and arg[4] is the file I will use to put the result of the second command. But to execute these commands I need the shell path of each. <br>
 ##### Some questions I have asked myself:
 * How can I find the path of a shell command? <br>
-##### I must get the path variable of my environment. Then I retrieve the PATH line and I separate each paths mentionned using split and ':' character as separator. Finally, I check if the specified command is located in a specific path. If not, execve() function fails and I try another path.
+##### I must get the path variable of my environment. I use envp and a function that retrieve the PATH line and then extract all the possible paths on my computer. After that, I separate each paths mentionned using split and ':' character as separator.
 * How can I deal with commands options (for example '-l' of 'wc')? <br>
 ##### I also use ft\_split() with space as separator to get the command and each options in a double array.
 * How verify if I have access to a particular path? <br>
-##### I should use access() but I think I could use another way simply by checking all possible path with execve(). If no correct path is found, execve does nothing and I return an EXIT\_FAILURE.
+##### As I already extract all possible paths, I only must create a loop that will try every path with the command and when access function returns 0 the correct path has been founded and command is returned. Otherwise the child process returns a command error.
 * How files will communicate? <br>
-##### First I will create a pipe to allow communication between two processes. In this case, by using fork(), I create a child and a parent process that will communicate with each other. Then, I will redirect the standard output of the child in the standard input of the parent with dup(). Finally, I will use waitpid() otherwise the parent ends and don't wait for the child's change of state. Therefore, child process will become zombie (orphan childs) process which wait for their parents to take them into account.
+##### First I will create a pipe to allow communication between two processes. In this case, by using fork() two times, I create two child processes that will communicate with each other. Then, I will redirect the standard output of the first child in the standard input of the last child with dup(). Finally, I will use two waitpid() in my parent process otherwise the parent ends and doesn't wait for the state change of both childs. Therefore, child processes will become zombie (orphan childs) processes which wait for their parents to take them into account.
 * How deals with dup()? <br>
-##### In the child process, I want infile as stdin for cmd1 and pipefd[1] as stdout for cmd1. In the parent process, I want  pipefd[0] as stdin for cmd2 and outfile as stdout for cmd2. So, i will duplicate each file and pass the flow I need as an argument.
+##### In the first child, I want infile as stdin for cmd1 and pipefd[1] as stdout for cmd1. In the last child, I want  pipefd[0] as stdin for cmd2 and outfile as stdout for cmd2. So, i will duplicate each file and pass the flow I need as an argument. To avoid any problems, I close files that I don't use in each process.

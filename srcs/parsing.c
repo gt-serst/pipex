@@ -6,7 +6,7 @@
 /*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 21:46:26 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/04/18 16:56:31 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/04/18 18:15:55 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_search_path_variable(char **envp, char *str)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	*path_variable;
 
 	i = 0;
@@ -29,7 +29,8 @@ char	*ft_search_path_variable(char **envp, char *str)
 				j++;
 				if (str[j + 1] == '\0')
 				{
-					path_variable = ft_substr(envp[i], j + 1, ft_strlen(envp[i]));
+					path_variable = ft_substr(envp[i], j + 1,
+							ft_strlen(envp[i]));
 					return (path_variable);
 				}
 			}
