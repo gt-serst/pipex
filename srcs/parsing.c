@@ -6,7 +6,7 @@
 /*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 21:46:26 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/04/17 18:25:37 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/04/18 16:56:31 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,29 +42,17 @@ char	*ft_search_path_variable(char **envp, char *str)
 void	ft_get_paths_and_cmds(t_data *pipex, char **av, char **envp)
 {
 	char	*path_variable;
-	char	*temp;
+	char	*tmp;
 
-	/* GET PATH VARIABLE*/
 	path_variable = ft_search_path_variable(envp, "PATH=");
-	//printf("%s\n", path_variable);
-	/* GET ALL PATHS */
 	pipex->mypaths = ft_split(path_variable, ':');
 	free(path_variable);
-	//printf("%s\n", pipex->mypaths[0]);
-	/* GET ALL CMD1 OPTIONS */
 	pipex->mycmd1args = ft_split(av[2], ' ');
-	//printf("%s\n", pipex->mycmd1args[1]);
-	/* GET CMD1 */
-	temp = ft_strdup("/");
-	pipex->mycmd1 = ft_strjoin(temp, pipex->mycmd1args[0]);
-	free(temp);
-	//printf("%s\n", pipex->mycmd1);
-	/* GET ALL CMD2 OPTIONS */
+	tmp = ft_strdup("");
+	pipex->mycmd1 = ft_strjoin(tmp, pipex->mycmd1args[0]);
+	free(tmp);
 	pipex->mycmd2args = ft_split(av[3], ' ');
-	//printf("%s\n", pipex->mycmd2args[1]);
-	/* GET CMD2 */
-	temp = ft_strdup("/");
-	pipex->mycmd2 = ft_strjoin(temp, pipex->mycmd2args[0]);
-	free(temp);
-	//printf("%s\n", pipex->mycmd2);
+	tmp = ft_strdup("");
+	pipex->mycmd2 = ft_strjoin(tmp, pipex->mycmd2args[0]);
+	free(tmp);
 }

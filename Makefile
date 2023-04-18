@@ -6,7 +6,7 @@
 #    By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 17:01:35 by gt-serst          #+#    #+#              #
-#    Updated: 2023/04/17 17:20:22 by gt-serst         ###   ########.fr        #
+#    Updated: 2023/04/18 16:20:35 by gt-serst         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,8 @@ RM					= rm -rf
 
 SRCS				= main.c \
 					  parsing.c \
-					  pipex.c \
-					  process.c \
+					  processes.c \
+					  errors.c
 
 OBJS				= $(addprefix srcs/, $(SRCS:.c=.o))
 

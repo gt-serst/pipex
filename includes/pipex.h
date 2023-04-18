@@ -6,7 +6,7 @@
 /*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:56:54 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/04/17 18:25:42 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/04/18 16:56:49 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,18 @@ typedef struct s_data
 	char	**mycmd1args;
 	char	**mycmd2args;
 	int		pipefd[2];
-	pid_t	pid;
+	pid_t	pid1;
+	pid_t	pid2;
 	char	*cmd;
 
 }	t_data;
 
+void	ft_fork_error(t_data *pipex);
+void	ft_pipe_error(t_data *pipex);
+void	ft_cmd_error(t_data *pipex, char *cmdname);
+void	ft_file_error(char *filename);
 void	ft_get_paths_and_cmds(t_data *pipex, char **av, char **envp);
-void	ft_pipex(t_data *pipex, char **envp);
-void	ft_exit(char *msg);
-void	ft_free_malloc(t_data *pipex);
-void	ft_child_process(t_data *pipex, char **envp);
-void	ft_parent_process(t_data *pipex, char **envp);
+int		ft_parent_process(t_data *pipex, char **envp);
+void	ft_free_struct(t_data *pipex);
 
 #endif
