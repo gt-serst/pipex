@@ -39,7 +39,7 @@
 `pid_t waitpid(pid_t pid, int *status, int options);`
 ## Logic to reproduce the shell pipe '|' operator
 ##### First of all I have to extract arguments send by the shell command. arg[0] is the executive file, arg[1] is the file I will use to put the result of the first command, arg[2] is the first command, arg[3] is the second command and arg[4] is the file I will use to put the result of the second command. But to execute these commands I need the shell path of each. <br>
-##### Some questions I have asked myself:
+##### Some questions I have asked myself :
 * How can I find the path of a shell command? <br>
 ##### I must get the path variable of my environment. I use envp and a function that retrieve the PATH line and then extract all the possible paths on my computer. After that, I separate each paths mentionned using split and ':' character as separator.
 * How can I deal with command options (for example '-l' of 'wc')? <br>
