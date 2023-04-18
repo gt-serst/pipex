@@ -42,7 +42,7 @@
 ##### Some questions I have asked myself:
 * How can I find the path of a shell command? <br>
 ##### I must get the path variable of my environment. I use envp and a function that retrieve the PATH line and then extract all the possible paths on my computer. After that, I separate each paths mentionned using split and ':' character as separator.
-* How can I deal with commands options (for example '-l' of 'wc')? <br>
+* How can I deal with command options (for example '-l' of 'wc')? <br>
 ##### I also use ft\_split() with space as separator to get the command and each options in a double array.
 * How verify if I have access to a particular path? <br>
 ##### As I already extract all possible paths, I only must create a loop that will try every path with the command and when access function returns 0 the correct path has been founded and command is returned. Otherwise the child process returns a command error.
