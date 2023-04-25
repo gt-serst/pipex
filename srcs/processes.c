@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
+/*   By: geraudtserstevens <geraudtserstevens@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 18:27:47 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/04/18 18:32:09 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/04/25 22:01:25 by geraudtsers      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*ft_get_cmd(char **mypaths, char *mycmd)
 	char	*command;
 
 	i = 0;
-	while (mypaths[i])
+	while (mypaths && mypaths[i])
 	{
 		tmp = ft_strjoin(mypaths[i], "/");
 		command = ft_strjoin(tmp, mycmd);
