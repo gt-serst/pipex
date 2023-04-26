@@ -3,77 +3,77 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: geraudtserstevens <geraudtserstevens@st    +#+  +:+       +#+        */
+/*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 21:46:26 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/04/25 23:29:03 by geraudtsers      ###   ########.fr       */
+/*   Updated: 2023/04/26 12:26:22 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-char	*ft_get_path(char **envp, char *str)
+static char	*ft_get_env_path(char **envp)
 {
 	int		i;
-	int		j;
-	char	*path_variable;
+	char	*path;
 
 	i = 0;
-	while (envp[i] && str)
+	path = NULL;
+	while (envp && envp[i])
 	{
-		j = 0;
-		if (envp[i][j] == str[j])
+		path = ft_strnstr(envp[i], "PATH=", 5);
+		if (path)
 		{
-			while (envp[i][j] && str[j] && envp[i][j] == str[j])
-			{
-				j++;
-				if (str[j + 1] == '\0')
-				{
-					path_variable = ft_substr(envp[i], j + 1,
-							ft_strlen(envp[i]));
-					return (path_variable);
-				}
-			}
+			path = ft_substr(path, 5, ft_strlen(path));
+			break ;
 		}
 		i++;
 	}
-	return (NULL);
+	return (path);
 }
 
-static int ft_get_cmd(t_data *pipex, char **envp, char *cmd)
+static char **ft_get_env_paths(char **envp)
 {
-	char	*path_variable;
+	char	*path;
+	char	**paths;
 
-	path_variable = ft_get_path(envp, "PATH=");
-	if (!path_variable)
+	path = ft_get_env_path(envp);
+	if (!path)
+		return (NULL);
+	paths = ft_split(path, ':');
+	free(path);
+	if (!paths)
+		return (NULL);
+	return (paths);
+}
+
+static int	ft_get_cmd(char **mycmdargs, char *mycmd, char *cmd)
+{
+	mycmdargs = ft_split(cmd, ' ');
+	//printf("Mycmdargs: %s\n", mycmdargs[1]);
+	if (!mycmdargs)
 		return (0);
-	pipex->mypaths = ft_split(path_variable, ':');
-	if (!pipex->mypaths)
+	mycmd = ft_strdup(mycmdargs[0]);
+	//printf("Mycmd: %s\n", mycmd);
+	if (!mycmd)
 	{
-		free(path_variable);
+		ft_free_array(mycmdargs);
 		return (0);
 	}
-	
+	return (1);
 }
 
-void	ft_get_paths_and_cmds(t_data *pipex, char **av, char **envp)
+int	ft_parsing(t_data *pipex, char **av, char **envp)
 {
-	char	*path_variable;
-	char	*tmp;
-
-	path_variable = ft_search_path_variable(envp, "PATH=");
-	pipex->mypaths = ft_split(path_variable, ':');
-	free(path_variable);
-	if (!ft_get_cmd(pipex, envp, av[2]) || !ft_get_cmd(pipex, envp, av[3]))
-		return (ft_free_childs(pipex));
-	pipex->mycmd1args = ft_split(av[2], ' ');
-/*
-	tmp = ft_strdup("");
-	pipex->mycmd1 = ft_strjoin(tmp, pipex->mycmd1args[0]);
-	free(tmp);
-*/
-	pipex->mycmd2args = ft_split(av[3], ' ');
-	tmp = ft_strdup("");
-	pipex->mycmd2 = ft_strjoin(tmp, pipex->mycmd2args[0]);
-	free(tmp);
+	pipex->mypaths = ft_get_env_paths(envp);
+	if (!pipex->mypaths)
+		return (0);
+	if (!ft_get_cmd(&(*pipex->mycmd1args), &(*pipex->mycmd1), av[2]) ||
+			!ft_get_cmd(&(*pipex->mycmd2args), &(*pipex->mycmd2), av[3]))
+	{
+			ft_free_childs(pipex);
+			return (0);
+	}
+	//printf("Mycmd1: %s\n", pipex->mycmd1);
+	return (1);
 }

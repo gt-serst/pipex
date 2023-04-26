@@ -6,13 +6,13 @@
 #    By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 17:01:35 by gt-serst          #+#    #+#              #
-#    Updated: 2023/04/18 17:56:24 by gt-serst         ###   ########.fr        #
+#    Updated: 2023/04/26 12:22:06 by gt-serst         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME				= pipex
 
-CC					= gcc -g3 -fsanitize=address
+CC					= gcc
 
 CFLAGS				= -Wall -Wextra -Werror
 

@@ -6,13 +6,13 @@
 /*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 16:52:30 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/04/18 18:14:54 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/04/26 12:27:04 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-static void	ft_free_array(char **array)
+void	ft_free_array(char **array)
 {
 	int	i;
 
@@ -56,7 +56,11 @@ int	main(int ac, char **av, char **envp)
 	pipex->outfile = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (pipex->outfile < 0)
 		ft_file_error(pipex, av[4]);
-	ft_get_paths_and_cmds(pipex, av, envp);
+	if (!ft_parsing(pipex, av, envp))
+	{
+		free(pipex);
+		return (0);
+	}
 	status = ft_parent_process(pipex, envp);
 	ft_free_parent(pipex);
 	if (WEXITSTATUS(status) != 0)
