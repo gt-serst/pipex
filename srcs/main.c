@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
+/*   By: geraudtserstevens <geraudtserstevens@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 16:52:30 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/04/26 12:27:04 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/04/26 16:10:51 by geraudtsers      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,35 @@ void	ft_free_array(char **array)
 	free(array);
 }
 
-void	ft_free_childs(t_data *pipex)
+void	ft_free_child_process(char *cmd, char **cmdargs)
 {
-	ft_free_array(pipex->mycmd1args);
-	free(pipex->mycmd1);
-	ft_free_array(pipex->mycmd2args);
-	free(pipex->mycmd2);
-	free(pipex->cmd);
+	int	i;
+
+	i = 0;
+	while (cmdargs && cmdargs[i])
+	{
+		free(cmdargs[i]);
+		i++;
+	}
+	free(cmdargs);
+	free(cmd);
 }
 
-void	ft_free_parent(t_data *pipex)
+void	ft_free_cmds(t_pipex *pipex)
+{
+	if (!pipex->cmd1->mycmdargs)
+		ft_free_array(pipex->cmd1->mycmdargs);
+	if (!pipex->cmd1->mycmd)
+		free(pipex->cmd1->mycmd);
+	if (!pipex->cmd2->mycmdargs)
+		ft_free_array(pipex->cmd2->mycmdargs);
+	if (!pipex->cmd2->mycmd)
+		free(pipex->cmd2->mycmd);
+	free(pipex->cmd1);
+	free(pipex->cmd2);
+}
+
+void	ft_free_paths(t_pipex *pipex)
 {
 	ft_free_array(pipex->mypaths);
 	free(pipex);
@@ -43,13 +62,13 @@ void	ft_free_parent(t_data *pipex)
 int	main(int ac, char **av, char **envp)
 {
 	int		status;
-	t_data	*pipex;
+	t_pipex	*pipex;
 
 	if (ac != 5)
 		return (1);
-	pipex = malloc(sizeof(t_data));
+	pipex = malloc(sizeof(t_pipex));
 	if (!pipex)
-		return (0);
+		return (1);
 	pipex->infile = open(av[1], O_RDONLY);
 	if (pipex->infile < 0)
 		ft_file_error(pipex, av[1]);
@@ -59,10 +78,10 @@ int	main(int ac, char **av, char **envp)
 	if (!ft_parsing(pipex, av, envp))
 	{
 		free(pipex);
-		return (0);
+		return (1);
 	}
 	status = ft_parent_process(pipex, envp);
-	ft_free_parent(pipex);
+	ft_free_paths(pipex);
 	if (WEXITSTATUS(status) != 0)
 		exit(WEXITSTATUS(status));
 	return (status);

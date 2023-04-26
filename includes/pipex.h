@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
+/*   By: geraudtserstevens <geraudtserstevens@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:56:54 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/04/26 12:26:02 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/04/26 17:15:44 by geraudtsers      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,27 +23,30 @@
 
 typedef struct s_data
 {
+	char	*mycmd;
+	char	**mycmdargs;
+	pid_t	pid;
+}	t_data;
+
+typedef struct s_pipex
+{
 	int		infile;
 	int		outfile;
 	char	**mypaths;
-	char	*mycmd1;
-	char	*mycmd2;
-	char	**mycmd1args;
-	char	**mycmd2args;
 	int		pipefd[2];
-	pid_t	pid1;
-	pid_t	pid2;
-	char	*cmd;
-}	t_data;
+	t_data	*cmd1;
+	t_data	*cmd2;
+}	t_pipex;
 
 void	ft_fork_error(void);
 void	ft_pipe_error(void);
-void	ft_cmd_error(t_data *pipex, char *cmdname);
-void	ft_file_error(t_data *pipex, char *filename);
-int		ft_parsing(t_data *pipex, char **av, char **envp);
-int		ft_parent_process(t_data *pipex, char **envp);
-void	ft_free_childs(t_data *pipex);
-void	ft_free_parent(t_data *pipex);
+void	ft_cmd_error(t_pipex *pipex, char *cmdname, char **cmdargs);
+void	ft_file_error(t_pipex *pipex, char *filename);
+int		ft_parsing(t_pipex *pipex, char **av, char **envp);
+int		ft_parent_process(t_pipex *pipex, char **envp);
+void	ft_free_child_process(char *cmd, char **cmdargs);
+void	ft_free_cmds(t_pipex *pipex);
+void	ft_free_paths(t_pipex *pipex);
 void	ft_free_array(char **array);
 
 #endif
