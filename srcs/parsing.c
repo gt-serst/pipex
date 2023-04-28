@@ -6,11 +6,18 @@
 /*   By: geraudtserstevens <geraudtserstevens@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 21:46:26 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/04/26 15:35:38 by geraudtsers      ###   ########.fr       */
+/*   Updated: 2023/04/28 19:04:30 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+
+static void	ft_init_struct(t_data *c)
+{
+	c->cmd = NULL;
+	c->cmdargs = NULL;
+	c->paths = NULL;
+}
 
 static char	*ft_get_env_path(char **envp)
 {
@@ -32,56 +39,39 @@ static char	*ft_get_env_path(char **envp)
 	return (path);
 }
 
-static char	**ft_get_env_paths(char **envp)
+static int	ft_get_env_paths(t_data *c, char **envp)
 {
 	char	*path;
-	char	**paths;
 
 	path = ft_get_env_path(envp);
 	if (!path)
-		return (NULL);
-	paths = ft_split(path, ':');
-	free(path);
-	if (!paths)
-		return (NULL);
-	return (paths);
-}
-
-static int	ft_get_cmd(t_data *c, char *cmd)
-{
-	c->mycmdargs = NULL;
-	c->mycmdargs = ft_split(cmd, ' ');
-	if (!c->mycmdargs)
 		return (0);
-	c->mycmd = NULL;
-	c->mycmd = ft_strdup(c->mycmdargs[0]);
-	if (!c->mycmd)
+	c->paths = ft_split(path, ':');
+	free(path);
+	if (!c->paths)
 		return (0);
 	return (1);
 }
 
-int	ft_parsing(t_pipex *pipex, char **av, char **envp)
+static int	ft_get_cmd(t_data *c, char *command)
 {
-	pipex->cmd1 = malloc(sizeof(t_data));
-	if (!pipex->cmd1)
+	c->cmdargs = ft_split(command, ' ');
+	if (!c->cmdargs)
 		return (0);
-	pipex->cmd2 = malloc(sizeof(t_data));
-	if (!pipex->cmd2)
-	{
-		free(pipex->cmd1);
+	c->cmd = ft_strdup(c->cmdargs[0]);
+	if (!c->cmd)
 		return (0);
-	}
-	pipex->mypaths = ft_get_env_paths(envp);
-	if (!pipex->mypaths)
+	return (1);
+}
+
+int	ft_parsing(t_data *cmd1, t_data *cmd2, char **av, char **envp)
+{
+	ft_init_struct(cmd1);
+	ft_init_struct(cmd2);
+	if (!ft_get_env_paths(cmd1, envp) || !ft_get_env_paths(cmd2, envp)
+		|| !ft_get_cmd(cmd1, av[2]) || !ft_get_cmd(cmd2, av[3]))
 	{
-		ft_free_cmds(pipex);
-		return (0);
-	}
-	if (!ft_get_cmd(pipex->cmd1, av[2])
-		|| !ft_get_cmd(pipex->cmd2, av[3]))
-	{
-		ft_free_array(pipex->mypaths);
-		ft_free_cmds(pipex);
+		ft_free(cmd1, cmd2);
 		return (0);
 	}
 	return (1);

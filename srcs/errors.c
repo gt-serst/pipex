@@ -6,15 +6,14 @@
 /*   By: geraudtserstevens <geraudtserstevens@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 16:04:07 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/04/26 17:16:23 by geraudtsers      ###   ########.fr       */
+/*   Updated: 2023/04/28 19:04:29 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void	ft_file_error(t_pipex *pipex, char *filename)
+void	ft_file_error(char *filename)
 {
-	free(pipex);
 	write(2, "zsh: no such file or directory: ", 32);
 	write(2, filename, ft_strlen(filename));
 	write(2, "\n", 1);
@@ -33,13 +32,11 @@ void	ft_fork_error(void)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_cmd_error(t_pipex *pipex, char *cmdname, char **cmdargs)
+void	ft_cmd_error(t_data *c)
 {
 	write(2, "zsh: command not found: ", 24);
-	write(2, cmdname, ft_strlen(cmdname));
+	write(2, c->cmd, ft_strlen(c->cmd));
 	write(2, "\n", 1);
-	ft_free_child_process(cmdname, cmdargs);
-	ft_free_paths(pipex);
-	system("leaks pipex");
+	ft_free_struct(c);
 	exit(EXIT_FAILURE);
 }
