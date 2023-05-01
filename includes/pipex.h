@@ -6,7 +6,7 @@
 /*   By: geraudtserstevens <geraudtserstevens@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:56:54 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/04/28 18:55:45 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/05/01 19:17:31 by geraudtsers      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	ft_cmd_error(t_data *c);
 void	ft_file_error(char *filename);
 int		ft_parsing(t_data *cmd1, t_data *cmd2, char **av, char **envp);
 int		ft_parent_process(t_data *cmd1, t_data *cmd2, char **envp);
+char	*ft_check_if_path_exists(char *command);
 void	ft_free_struct(t_data *c);
 void	ft_free(t_data *cmd1, t_data *cmd2);
 void	ft_free_arr(char **arr);

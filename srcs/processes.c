@@ -6,7 +6,7 @@
 /*   By: geraudtserstevens <geraudtserstevens@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 18:27:47 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/04/28 19:04:26 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/05/01 19:19:27 by geraudtsers      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,15 @@ static void	ft_first_child(t_data *cmd1, int *pipefd, char **envp)
 	dup2(cmd1->f, 0);
 	close(cmd1->f);
 	dup2(pipefd[1], 1);
-	command = ft_get_cmd(cmd1->paths, cmd1->cmd);
+	command = ft_check_if_path_exists(cmd1->cmd);
 	if (!command)
 	{
-		free(command);
-		ft_cmd_error(cmd1);
+		command = ft_get_cmd(cmd1->paths, cmd1->cmd);
+		if (!command)
+		{
+			free(command);
+			ft_cmd_error(cmd1);
+		}
 	}
 	execve(command, cmd1->cmdargs, envp);
 }
@@ -63,11 +67,15 @@ static void	ft_last_child(t_data *cmd2, int *pipefd, char **envp)
 	dup2(cmd2->f, 1);
 	close(cmd2->f);
 	dup2(pipefd[0], 0);
-	command = ft_get_cmd(cmd2->paths, cmd2->cmd);
+	command = ft_check_if_path_exists(cmd2->cmd);
 	if (!command)
 	{
-		free(command);
-		ft_cmd_error(cmd2);
+		command = ft_get_cmd(cmd2->paths, cmd2->cmd);
+		if (!command)
+		{
+			free(command);
+			ft_cmd_error(cmd2);
+		}
 	}
 	execve(command, cmd2->cmdargs, envp);
 }
