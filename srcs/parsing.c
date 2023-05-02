@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: geraudtserstevens <geraudtserstevens@st    +#+  +:+       +#+        */
+/*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 21:46:26 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/04/28 19:04:30 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/05/02 16:43:46 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-static void	ft_init_struct(t_data *c)
+static void	ft_init_struct(t_data *c, char **arg_list)
 {
 	c->cmd = NULL;
 	c->cmdargs = NULL;
 	c->paths = NULL;
+	c->arg_list = arg_list;
 }
 
 static char	*ft_get_env_path(char **envp)
@@ -66,8 +67,8 @@ static int	ft_get_cmd(t_data *c, char *command)
 
 int	ft_parsing(t_data *cmd1, t_data *cmd2, char **av, char **envp)
 {
-	ft_init_struct(cmd1);
-	ft_init_struct(cmd2);
+	ft_init_struct(cmd1, av);
+	ft_init_struct(cmd2, av);
 	if (!ft_get_env_paths(cmd1, envp) || !ft_get_env_paths(cmd2, envp)
 		|| !ft_get_cmd(cmd1, av[2]) || !ft_get_cmd(cmd2, av[3]))
 	{

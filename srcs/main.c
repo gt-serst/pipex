@@ -6,7 +6,7 @@
 /*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 16:52:30 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/05/02 16:12:59 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/05/02 16:46:24 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,11 @@ int	main(int ac, char **av, char **envp)
 
 	if (ac != 5)
 		return (1);
-	cmd1.f = open(av[1], O_RDONLY);
-	if (cmd1.f < 0)
-		ft_file_error(av[1]);
-	cmd2.f = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if (cmd2.f < 0)
-		ft_file_error(av[4]);
 	if (!ft_parsing(&cmd1, &cmd2, av, envp))
 		return (1);
 	status = ft_parent_process(&cmd1, &cmd2, envp);
 	ft_free(&cmd1, &cmd2);
 	if (WEXITSTATUS(status) != 0)
 		exit(WEXITSTATUS(status));
-	system("leaks pipex");
 	return (status);
 }

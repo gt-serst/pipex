@@ -6,7 +6,7 @@
 /*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:56:54 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/05/02 16:07:29 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/05/02 16:43:58 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@ typedef struct s_data
 	char	*cmd;
 	char	**cmdargs;
 	char	**paths;
+	char	**arg_list;
 	pid_t	pid;
 }	t_data;
 
 void	ft_fork_error(void);
 void	ft_pipe_error(void);
-void	ft_cmd_error(t_data *cmd1, t_data *cmd2);
+void	ft_cmd_error(t_data *c);
 void	ft_file_error(char *filename);
 int		ft_parsing(t_data *cmd1, t_data *cmd2, char **av, char **envp);
 int		ft_parent_process(t_data *cmd1, t_data *cmd2, char **envp);
