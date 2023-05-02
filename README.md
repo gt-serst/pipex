@@ -5,7 +5,7 @@ Reproduce shell pipe operator in C.
 The program will be executed like this
 `./pipex infile cmd1 cmd2 outfile`
 so it takes 4 arguments : infile outfile are files names and cmd1 cmd2 are shell commands with their parameters.
-## Theory
+## Foreword
 Each UNIX process is associated to 3 distincts flows :
 1) standard input (STDIN), by default it is associated to the keyboard.
 2) standard output (STDOUT), by default it is associated to the terminal.
