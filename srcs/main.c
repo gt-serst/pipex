@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: geraudtserstevens <geraudtserstevens@st    +#+  +:+       +#+        */
+/*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 16:52:30 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/04/28 19:04:25 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/05/02 16:12:59 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ int	main(int ac, char **av, char **envp)
 	ft_free(&cmd1, &cmd2);
 	if (WEXITSTATUS(status) != 0)
 		exit(WEXITSTATUS(status));
+	system("leaks pipex");
 	return (status);
 }
