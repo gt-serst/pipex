@@ -3,40 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
+/*   By: geraudtserstevens <geraudtserstevens@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 16:04:07 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/05/02 16:24:12 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/05/03 10:13:36 by geraudtsers      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void	ft_file_error(char *filename)
+void	ft_exit_msg(void)
+{
+	perror("pipex");
+	exit(errno);
+}
+
+void	ft_exit_file(char *filename)
 {
 	write(2, "zsh: no such file or directory: ", 32);
 	write(2, filename, ft_strlen(filename));
 	write(2, "\n", 1);
-	exit(EXIT_FAILURE);
+	exit(0);
 }
 
-void	ft_pipe_error(void)
-{
-	perror("pipe");
-	exit(EXIT_FAILURE);
-}
-
-void	ft_fork_error(void)
-{
-	perror("fork");
-	exit(EXIT_FAILURE);
-}
-
-void	ft_cmd_error(t_data *c)
+void	ft_exit_wrgcmd(t_data *c, int error_code)
 {
 	write(2, "zsh: command not found: ", 24);
 	write(2, c->cmd, ft_strlen(c->cmd));
 	write(2, "\n", 1);
 	ft_free_struct(c);
-	exit(EXIT_FAILURE);
+	printf("error_code: %d\n", error_code);
+	exit(error_code);
 }

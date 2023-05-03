@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
+/*   By: geraudtserstevens <geraudtserstevens@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 16:52:30 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/05/02 16:46:24 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/05/03 10:12:57 by geraudtsers      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,17 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	status = ft_parent_process(&cmd1, &cmd2, envp);
 	ft_free(&cmd1, &cmd2);
-	if (WEXITSTATUS(status) != 0)
-		exit(WEXITSTATUS(status));
-	return (status);
+	if (WIFEXITED(status))
+	{
+		if (WEXITSTATUS(status) != 0)
+			exit(WEXITSTATUS(status));
+	}
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGTERM)
+			ft_exit_msg();
+		else if (WTERMSIG(status) == SIGKILL)
+			ft_exit_msg();
+	}
+	return (EXIT_SUCCESS);
 }

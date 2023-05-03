@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
+/*   By: geraudtserstevens <geraudtserstevens@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:56:54 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/05/02 16:43:58 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/05/03 11:04:30 by geraudtsers      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/errno.h>
 # include "../libft/libft.h"
 
 typedef struct s_data
@@ -31,15 +32,21 @@ typedef struct s_data
 	pid_t	pid;
 }	t_data;
 
-void	ft_fork_error(void);
-void	ft_pipe_error(void);
-void	ft_cmd_error(t_data *c);
-void	ft_file_error(char *filename);
+/*	DATA EXTRACTION		*/
 int		ft_parsing(t_data *cmd1, t_data *cmd2, char **av, char **envp);
+
+/*		PROCESS			*/
 int		ft_parent_process(t_data *cmd1, t_data *cmd2, char **envp);
 char	*ft_check_if_path_exists(char *command);
+
+/*		DATA CLEANING	*/
 void	ft_free_struct(t_data *c);
 void	ft_free(t_data *cmd1, t_data *cmd2);
 void	ft_free_arr(char **arr);
+
+/*		ERROR MSG		*/
+void	ft_exit_msg(void);
+void	ft_exit_file(char *filename);
+void	ft_exit_wrgcmd(t_data *c, int error_code);
 
 #endif

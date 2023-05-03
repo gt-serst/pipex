@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
+/*   By: geraudtserstevens <geraudtserstevens@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 18:27:47 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/05/02 16:46:12 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/05/03 10:34:50 by geraudtsers      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,11 @@ static char	*ft_get_cmd(char **paths, char *cmd)
 static void	ft_first_child(t_data *cmd1, int *pipefd, char **envp)
 {
 	char	*command;
+	int		error_code;
 
 	cmd1->f = open(cmd1->arg_list[1], O_RDONLY);
 	if (cmd1->f < 0)
-		ft_file_error(cmd1->arg_list[1]);
+		ft_exit_file(cmd1->arg_list[1]);
 	close(pipefd[0]);
 	dup2(cmd1->f, 0);
 	close(cmd1->f);
@@ -54,18 +55,21 @@ static void	ft_first_child(t_data *cmd1, int *pipefd, char **envp)
 	{
 		command = ft_get_cmd(cmd1->paths, cmd1->cmd);
 		if (!command)
-			ft_cmd_error(cmd1);
+			ft_exit_wrgcmd(cmd1, 0);
 	}
-	execve(command, cmd1->cmdargs, envp);
+	error_code = execve(command, cmd1->cmdargs, envp);
+	if (error_code == -1)
+		ft_exit_msg();
 }
 
 static void	ft_last_child(t_data *cmd2, int *pipefd, char **envp)
 {
 	char	*command;
+	int		error_code;
 
 	cmd2->f = open(cmd2->arg_list[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (cmd2->f < 0)
-		ft_file_error(cmd2->arg_list[1]);
+		ft_exit_file(cmd2->arg_list[1]);
 	close(pipefd[1]);
 	dup2(cmd2->f, 1);
 	close(cmd2->f);
@@ -75,9 +79,11 @@ static void	ft_last_child(t_data *cmd2, int *pipefd, char **envp)
 	{
 		command = ft_get_cmd(cmd2->paths, cmd2->cmd);
 		if (!command)
-			ft_cmd_error(cmd2);
+			ft_exit_wrgcmd(cmd2, 127);
 	}
-	execve(command, cmd2->cmdargs, envp);
+	error_code = execve(command, cmd2->cmdargs, envp);
+	if (error_code == -1)
+		ft_exit_msg();
 }
 
 int	ft_parent_process(t_data *cmd1, t_data *cmd2, char **envp)
@@ -86,15 +92,15 @@ int	ft_parent_process(t_data *cmd1, t_data *cmd2, char **envp)
 	int	pipefd[2];
 
 	if (pipe(pipefd) == -1)
-		ft_pipe_error();
+		ft_exit_msg();
 	cmd1->pid = fork();
 	if (cmd1->pid == -1)
-		ft_fork_error();
+		ft_exit_msg();
 	else if (cmd1->pid == 0)
 		ft_first_child(cmd1, pipefd, envp);
 	cmd2->pid = fork();
 	if (cmd2->pid == -1)
-		ft_fork_error();
+		ft_exit_msg();
 	else if (cmd2->pid == 0)
 		ft_last_child(cmd2, pipefd, envp);
 	ft_close_pipe(pipefd);
