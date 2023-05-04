@@ -6,7 +6,7 @@
 /*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:56:54 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/05/04 16:54:29 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:25:04 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_free_arr(char **arr);
 
 /*		ERROR MSG		*/
 void	ft_exit_msg(void);
-void	ft_exit_file(char *filename);
+void	ft_exit_file(char *filename, int cmd_nb);
 void	ft_exit_wrgcmd(t_data *c, int error_code);
 
 #endif

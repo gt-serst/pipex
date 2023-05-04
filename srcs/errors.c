@@ -6,7 +6,7 @@
 /*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 16:04:07 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/05/04 17:09:50 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:24:37 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_exit_msg(void)
 	exit(errno);
 }
 
-void	ft_exit_file(char *filename)
+void	ft_exit_file(char *filename, int cmd_nb)
 {
 	if (errno == 2)
 	{
@@ -32,7 +32,10 @@ void	ft_exit_file(char *filename)
 		write(2, filename, ft_strlen(filename));
 		write(2, "\n", 1);
 	}
-	exit(0);
+	if (cmd_nb == 1)
+		exit(0);
+	else
+		exit(1);
 }
 
 void	ft_exit_wrgcmd(t_data *c, int error_code)

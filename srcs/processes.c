@@ -6,7 +6,7 @@
 /*   By: geraudtserstevens <geraudtserstevens@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 18:27:47 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/05/03 10:34:50 by geraudtsers      ###   ########.fr       */
+/*   Updated: 2023/05/04 18:31:14 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	ft_first_child(t_data *cmd1, int *pipefd, char **envp)
 
 	cmd1->f = open(cmd1->arg_list[1], O_RDONLY);
 	if (cmd1->f < 0)
-		ft_exit_file(cmd1->arg_list[1]);
+		ft_exit_file(cmd1->arg_list[1], 1);
 	close(pipefd[0]);
 	dup2(cmd1->f, 0);
 	close(cmd1->f);
@@ -69,7 +69,7 @@ static void	ft_last_child(t_data *cmd2, int *pipefd, char **envp)
 
 	cmd2->f = open(cmd2->arg_list[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (cmd2->f < 0)
-		ft_exit_file(cmd2->arg_list[1]);
+		ft_exit_file(cmd2->arg_list[4], 2);
 	close(pipefd[1]);
 	dup2(cmd2->f, 1);
 	close(cmd2->f);
