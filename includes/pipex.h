@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: geraudtserstevens <geraudtserstevens@st    +#+  +:+       +#+        */
+/*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:56:54 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/05/03 11:04:30 by geraudtsers      ###   ########.fr       */
+/*   Updated: 2023/05/04 16:54:29 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <string.h>
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
