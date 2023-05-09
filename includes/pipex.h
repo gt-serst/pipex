@@ -6,7 +6,7 @@
 /*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:56:54 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/05/04 18:25:04 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/05/09 12:48:36 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_data
 	pid_t	pid;
 }	t_data;
 
-/*	DATA EXTRACTION		*/
+/*		DATA EXTRACTION		*/
 int		ft_parsing(t_data *cmd1, t_data *cmd2, char **av, char **envp);
 
 /*		PROCESS			*/
