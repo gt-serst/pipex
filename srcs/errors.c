@@ -6,19 +6,19 @@
 /*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 16:04:07 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/05/04 18:24:37 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/06/07 10:55:30 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void	ft_exit_msg(void)
+void	exit_msg(void)
 {
 	perror("pipex");
 	exit(errno);
 }
 
-void	ft_exit_file(char *filename, int cmd_nb)
+void	exit_file(char *filename, int cmd_nb)
 {
 	if (errno == 2)
 	{
@@ -38,11 +38,11 @@ void	ft_exit_file(char *filename, int cmd_nb)
 		exit(1);
 }
 
-void	ft_exit_wrgcmd(t_data *c, int error_code)
+void	exit_wrgcmd(t_data *c, int error_code)
 {
 	write(2, "zsh: command not found: ", 24);
 	write(2, c->cmd, ft_strlen(c->cmd));
 	write(2, "\n", 1);
-	ft_free_struct(c);
+	free_struct(c);
 	exit(error_code);
 }

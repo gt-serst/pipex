@@ -6,13 +6,13 @@
 /*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 21:46:26 by gt-serst          #+#    #+#             */
-/*   Updated: 2023/05/02 16:43:46 by gt-serst         ###   ########.fr       */
+/*   Updated: 2023/06/07 10:58:04 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-static void	ft_init_struct(t_data *c, char **arg_list)
+static void	init_struct(t_data *c, char **arg_list)
 {
 	c->cmd = NULL;
 	c->cmdargs = NULL;
@@ -20,7 +20,7 @@ static void	ft_init_struct(t_data *c, char **arg_list)
 	c->arg_list = arg_list;
 }
 
-static char	*ft_get_env_path(char **envp)
+static char	*get_env_path(char **envp)
 {
 	int		i;
 	char	*path;
@@ -40,11 +40,11 @@ static char	*ft_get_env_path(char **envp)
 	return (path);
 }
 
-static int	ft_get_env_paths(t_data *c, char **envp)
+static int	get_env_paths(t_data *c, char **envp)
 {
 	char	*path;
 
-	path = ft_get_env_path(envp);
+	path = get_env_path(envp);
 	if (!path)
 		return (0);
 	c->paths = ft_split(path, ':');
@@ -54,7 +54,7 @@ static int	ft_get_env_paths(t_data *c, char **envp)
 	return (1);
 }
 
-static int	ft_get_cmd(t_data *c, char *command)
+static int	get_cmd(t_data *c, char *command)
 {
 	c->cmdargs = ft_split(command, ' ');
 	if (!c->cmdargs)
@@ -65,14 +65,14 @@ static int	ft_get_cmd(t_data *c, char *command)
 	return (1);
 }
 
-int	ft_parsing(t_data *cmd1, t_data *cmd2, char **av, char **envp)
+int	parsing(t_data *cmd1, t_data *cmd2, char **av, char **envp)
 {
-	ft_init_struct(cmd1, av);
-	ft_init_struct(cmd2, av);
-	if (!ft_get_env_paths(cmd1, envp) || !ft_get_env_paths(cmd2, envp)
-		|| !ft_get_cmd(cmd1, av[2]) || !ft_get_cmd(cmd2, av[3]))
+	init_struct(cmd1, av);
+	init_struct(cmd2, av);
+	if (!get_env_paths(cmd1, envp) || !get_env_paths(cmd2, envp)
+		|| !get_cmd(cmd1, av[2]) || !get_cmd(cmd2, av[3]))
 	{
-		ft_free(cmd1, cmd2);
+		free_cmds(cmd1, cmd2);
 		return (0);
 	}
 	return (1);
