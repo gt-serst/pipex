@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: geraudtserstevens <geraudtserstevens@st    +#+  +:+       +#+        */
+/*   By: gt-serst <gt-serst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 18:24:30 by geraudtsers       #+#    #+#             */
-/*   Updated: 2022/12/01 10:33:15 by geraudtsers      ###   ########.fr       */
+/*   Created: 2022/11/18 18:24:30 by gt-serst          #+#    #+#             */
+/*   Updated: 2023/06/14 16:55:16 by gt-serst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
